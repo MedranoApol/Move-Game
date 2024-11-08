@@ -16,7 +16,7 @@
 #include "gameFunctions.hpp"
 #include <iostream>
 #include <ctime>
-#include <windows.h>
+#include <unistd.h>
 #include <fstream>
 #include <cstdlib>
 
@@ -63,7 +63,7 @@ int main() {
 		//prompts user to choose direction
 		std::string selection;
 		printMoveOptions();
-		Sleep(0.2);
+		sleep(0.2);
 		std::cin >> selection;
 
 		//executes move or executes move
@@ -102,7 +102,9 @@ int main() {
 					enemyToFight.EnemyTakingDamage(playerAttack);
 					std::cout << enemyToFight.getEnemyName() << " takes " << playerAttack << " damage\n\n";
 					playerOfGame.playerSumDamageDealt(playerAttack);
-					Sleep(100);
+					sleep(100);
+
+
 					if (enemyToFight.getEnemyHealth() == 0)
 					{
 						playerOfGame.addDefeatedEnemy(enemy);
@@ -143,12 +145,12 @@ int main() {
 						system("python sendPlayerStats.py");
 						playerStart = nullptr;
 						playerGoal = nullptr;
-						system("pause");
+						std::cin.get();
 						exit(1);
 					}
 					else
 					{
-						Sleep(100);
+						sleep(100);
 					}
 				}
 
@@ -159,21 +161,21 @@ int main() {
 			case '#':
 			{
 				std::cout << "Obstacle There!!\n";
-				system("pause");
+				std::cin.get();
 				clearScreen();
 			} break;
 
 			case '@':
 			{
 				std::cout << "Invalid Location!!\n";
-				system("pause");
+				std::cin.get();
 				clearScreen();
 			} break;
 
 			case '~':
 			{
 				std::cout << "No Move Selected!!\n";
-				system("pause");
+				std::cin.get();
 				clearScreen();
 			} break;
 
@@ -192,11 +194,9 @@ int main() {
 				// print the players results
 				printGameStatsAndWrite(nameOfPlayer, mapWidth, mapHeight, numOfMoves, 0, enemiesDefeated, alliesMet, currentTime,'W');
 				
-				//send game stats the database
-				system("python sendPlayerStats.py");
 				playerStart = nullptr;
 				playerGoal = nullptr;
-				system("pause");
+				std::cin.get();
 				exit(1);
 
 			} break;
@@ -204,7 +204,7 @@ int main() {
 			default:
 			{
 				std::cout << "No Move Made!!\n";
-				system("pause");
+				std::cin.get();
 				clearScreen();
 			} break;
 		}
